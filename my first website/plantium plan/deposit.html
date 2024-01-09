@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantium Plan </title>
+    <link rel="icon" type="image/jpg" href="../pics/Logo.jpg">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #3494E6, #EC6EAD);
+            color: #fff;
+        }
+
+        .plan-container {
+            text-align: center;
+            max-width: ;
+            margin-left: 80% ;
+            padding: 20px;
+            background: linear-gradient(135deg, #3494E6, #EC6EAD);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        #pre{
+            color: orangered;
+        }
+
+        h2 {
+            color: #2c2d30;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color:rgb(9, 10, 7);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #deec61ef;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.2em;
+        }
+
+        button:hover {
+            background-color: #0043ca;
+        }
+
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #confirmation {
+            color: green;
+            font-weight: bold;
+            display: none;
+            font-size: 1.2em;
+        }
+
+        @media only screen and (min-width: 768px) {
+            /* Adjust styles for tablets and larger screens */
+            .plan-container {
+                max-width: 600px;
+            }
+        }
+        h1{
+            color: rgb(235, 221, 221);
+            background-color: rgb(161, 110, 110);
+            border: 5px solid rgb(255, 72, 0);
+            height: 35px;
+            width: 120px;
+            border-radius: 5px;
+            text-align: center;
+            
+            margin-left: 40%;
+        }
+        .information{
+            height: 400px;
+            width: 600px;
+            text-align: left;
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="information">
+            <h2>Investment for Plentium Plan</h2>
+            <h1>
+                2000Rs
+            </h1>
+            <p>Please follow the instructions below to proceed with your investment.</p>
+    
+            <h3>
+                Choose one of these methods for investment and send me your investment on this information:
+            </h3>
+            <h3>
+                Want to send me in JazzCash?
+                <hr>
+                My Number: 0326-1659029 <br>
+                Name: Ahmed Hasan
+            </h3>
+            <hr>
+            <h3>
+                Want to send me in EasyPaisa?
+                <hr>
+                My Number: 0340-7852588 <br>
+                Name: Mehboob ul Hasan.
+            </h3>
+            <p id="pre">
+                Send money and upload a screenshot of EasyPaisa or JazzCash and enter your name from where you have
+                sent me the investment.
+                Enter your number, then click on the "Get Started" button and wait for the time we give you.
+                In this time, we check your transaction ID and your screenshot. If you have uploaded wrong information
+                and an invalid screenshot, we may block your account and delete your login information.
+                You can then log in again and proceed with the original investment and correct information.
+            </p>
+    
+    </div>
+   <div class="plan-container">
+        <!-- Investment form -->
+        <form id="investmentForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="image">Upload Picture:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <label for="transId">Transaction ID:</label>
+            <input type="text" id="transId" name="transId" required>
+
+            <button type="button" onclick="startTimer()" id="depositButton" disabled>Get Started</button>
+        </form>
+
+        <!-- Timer display -->
+        <div id="timer"></div>
+
+        <!-- Confirmation message -->
+        <div id="confirmation">Deposit successful! Thank you.</div>
+    </div>
+
+    <script>
+        let timerCount = 54000; // 15 hours in seconds
+        let timerInterval;
+
+        function startTimer() {
+            document.getElementById("investmentForm").style.display = "none"; // Hide the form
+            document.getElementById("timer").style.display = "block"; // Display the timer
+            document.getElementById("confirmation").style.display = "none"; // Hide confirmation message
+
+            timerInterval = setInterval(updateTimer, 1000); // Update every second
+        }
+
+        function updateTimer() {
+            const hours = Math.floor(timerCount / 3600);
+            const minutes = Math.floor((timerCount % 3600) / 60);
+            const seconds = timerCount % 60;
+
+            document.getElementById("timer").textContent = `Time remaining: ${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+
+            if (timerCount === 0) {
+                clearInterval(timerInterval); // Stop the timer
+                alert('Time is up! Please try again.'); // You can replace this with your logic
+                // Example: Redirect to a different page
+                // window.location.href = 'your_redirect_page.html';
+            } else {
+                timerCount--;
+            }
+        }
+
+        // Enable "Deposit Now" button when a photo is provided
+        document.getElementById("image").addEventListener("change", function () {
+            const depositButton = document.getElementById("depositButton");
+            depositButton.disabled = false;
+        });
+    </script>
+</body>
+
+</html>
