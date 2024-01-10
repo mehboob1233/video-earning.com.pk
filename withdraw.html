@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal Form</title>
+    <link rel="icon" type="image/jpg" href="pics/Logo.jpg">
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, p, label, input, select, button {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
+            background: linear-gradient(to right, #3494E6, #EC6EAD);
+            color: #000; /* Changed text color to black */
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 20px;
+            animation: gradientAnimation 10s infinite alternate; /* Background animation */
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Displaying content in column direction */
+            justify-content: center; /* Aligning content at the center of the flex container */
+            align-items: center;
+        }
+
+        @keyframes gradientAnimation {
+            from {
+                background-position: 0% 0%;
+            }
+            to {
+                background-position: 100% 0%;
+            }
+        }
+
+        /* Navigation Bar styles */
+        nav {
+            width: 100%; /* Adjust the width as needed */
+            background-color: #343a40;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+        }
+
+        nav img {
+            max-width: 50px;
+            height: auto;
+        }
+
+        /* Withdrawal Form Container styles */
+        .container {
+            width: 80%; /* Adjust the width as needed */
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s;
+            margin-top: 60px; /* Space below the fixed navigation bar */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        label {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        input,
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 15px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #userMessage {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #outputMessage {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#instructions">Instructions</a>
+        <a href="#withdrawalForm">Withdrawal Form</a>
+        <!-- Add more navigation links as needed -->
+        <img src="pics/Logo.jpg" alt="Logo">
+    </nav>
+
+    <!-- Withdrawal Form Container -->
+    <div class="container" id="withdrawalForm">
+        <div class="header">
+            <h1>Withdrawal Form</h1>
+        </div>
+
+        <form>
+            <!-- Input fields for user information -->
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required pattern="[0-9]{10}">
+
+            <label for="withdrawalOption">Withdrawal Option:</label>
+            <select id="withdrawalOption" name="withdrawalOption" required onchange="updateBalance()">
+                <option value="easypaisa">EasyPaisa</option>
+                <option value="jazzcash">JazzCash</option>
+            </select>
+
+            <!-- New input field for required money -->
+            <label for="requiredMoney">Required Money:</label>
+            <input type="number" id="requiredMoney" name="requiredMoney" required>
+
+            <!-- Display available balance dynamically -->
+            <!-- <p id="availableBalance">Available Balance: $0.00</p> -->
+
+            <!-- New input field for user's message -->
+            <label for="userMessage">Your Message:</label>
+            <input type="text" id="userMessage" name="userMessage">
+
+            <!-- Submit button            <button type="button" onclick="submitWithdrawal()">Submit</button>
+        </form>
+
+        <!-- Modal for processing notification -->
+        <div id="processingModal" class="modal">
+            <div class="modal-content">
+                <p>Withdrawal is being processed. Please wait...</p>
+            </div>
+        </div>
+
+        <!-- Display output message -->
+        <p id="outputMessage"></p>
+    </div>
+
+    <script>
+        // Function to display the processing modal
+        function showProcessingModal() {
+            document.getElementById('processingModal').style.display = 'flex';
+        }
+
+        // Function to hide the processing modal
+        function hideProcessingModal() {
+            document.getElementById('processingModal').style.display = 'none';
+        }
+
+        // Function to update the available balance dynamically (for demonstration purposes)
+        function updateBalance() {
+            const withdrawalOption = document.getElementById('withdrawalOption').value;
+            const availableBalance = (withdrawalOption === 'easypaisa') ? 500.00 : 1000.00; // Example values
+            document.getElementById('availableBalance').textContent = `Available Balance: $${availableBalance.toFixed(2)}`;
+        }
+
+        // Function to submit the withdrawal form
+        function submitWithdrawal() {
+            const name = document.getElementById('name').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const withdrawalOption = document.getElementById('withdrawalOption').value;
+            const requiredMoney = parseFloat(document.getElementById('requiredMoney').value);
+            const userMessage = document.getElementById('userMessage').value;
+
+            // Validate the required money input
+            if (isNaN(requiredMoney) || requiredMoney <= 0) {
+                alert('Please enter a valid amount for required money.');
+                return;
+            }
+
+            // Show the processing modal
+            showProcessingModal();
+
+            // Simulate a delay for processing (you can replace this with actual server communication)
+            setTimeout(function () {
+                // Hide the processing modal after processing is complete
+                hideProcessingModal();
+
+                // Display output message
+                document.getElementById('outputMessage').textContent = `Withdrawal successful! Message: ${userMessage}`;
+
+                // Reset the form
+                document.getElementById('withdrawalForm').reset();
+
+                // Update available balance (for demonstration purposes)
+                updateBalance();
+
+                // Clear user message field
+                document.getElementById('userMessage').value = '';
+            }, 2000); // Simulating a 2-second processing time
+        }
+    </script>
+</body>
+
+</html>
+

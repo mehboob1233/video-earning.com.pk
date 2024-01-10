@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond Plan</title>
+    <link rel="icon" type="image/jpg" href="../pics/Logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
+            background: linear-gradient(to right, #232526, #414345);
+            color: #FFF;
+            font-size: 1.6em;
+            line-height: 1.5;
+            padding: 20px;
+            animation: gradientAnimation 10s infinite alternate;
+        }
+
+        /* Background animation keyframes */
+        @keyframes gradientAnimation {
+            from {
+                background-position: 0% 0%;
+            }
+
+            to {
+                background-position: 100% 0%;
+            }
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* Heading styles */
+        h1, h2, h3 {
+            color: #e95846;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Paragraph styles */
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Link styles */
+        a {
+            color: #2db3cb;
+            text-decoration: none;
+            border-bottom: 1px solid #2db3cb;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            border-color: #FFF;
+        }
+
+        /* Pricing section styles */
+        .pricing-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .pricing-table {
+            width: calc(33.33% - 20px);
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease-in-out;
+            background: linear-gradient(to right, #232526, #414345);
+        }
+
+        .pricing-table:hover {
+            transform: scale(1.05);
+        }
+
+        .pricing-title {
+            color: #e95846;
+            background: #FFF;
+            padding: 20px 0;
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+
+        .pricing-table.recommended .pricing-title {
+            background: #2db3cb;
+        }
+
+        .price {
+            background: #403e3d;
+            font-size: 3.4em;
+            font-weight: 700;
+            padding: 20px 0;
+            color: #FFF;
+        }
+
+        /* List styles within pricing table */
+        .table-list {
+            background: #FFF;
+            color: #333;
+            list-style: none;
+        }
+
+        .table-list li {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 8px;
+            animation: fadeIn 1s ease-in-out;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+            font-size: 1.7em;
+        }
+
+        /* Alternating background colors for list items */
+        .table-list li:nth-child(odd) {
+            background: #6a0572;
+            color: white;
+        }
+
+        .table-list li:nth-child(even) {
+            background: #9d0208;
+            color: white;
+        }
+
+        /* List item animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover effect on list items */
+        .table-list li:hover {
+            background: #FFD700;
+        }
+
+        .table-list li:before {
+            content: "\f00c";
+            font-family: 'FontAwesome';
+            color: #3fab91;
+            display: inline-block;
+            position: absolute;
+            left: 0;
+        }
+
+        .table-list li span {
+            font-weight: 400;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* Buy section within pricing table */
+        .table-buy {
+            background: #FFF;
+            padding: 15px;
+            text-align: left;
+            overflow: hidden;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .table-buy p {
+            float: left;
+            color: #e95846;
+            font-weight: 700;
+            font-size: 2.4em;
+        }
+
+        .table-buy p sup {
+            font-size: 0.5em;
+            position: relative;
+            left: 5px;
+        }
+
+        /* Call to action button styles */
+        .pricing-action {
+            float: right;
+            color: #FFF;
+            background: #e95846;
+            padding: 10px 16px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.4em;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+            transition: background 0.3s ease-in-out;
+        }
+
+        .pricing-action:hover {
+            background: #cf4f3e;
+        }
+
+        /* Hover effect for recommended plan */
+        .recommended .pricing-action:hover {
+            background: #2db3cb;
+        }
+
+        /* Investment section styles */
+        .information {
+            background: #6a0572;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+            margin-top: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .information h1 {
+            color: #e95846;
+            background: #FFF;
+            padding: 15px;
+            font-size: 2.5em;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .information h2,
+        .information h3 {
+            color: #FFF;
+            margin-bottom: 15px;
+        }
+
+        .information p {
+            color: #e6e6e6;
+            margin-bottom: 20px;
+        }
+
+        .information hr {
+            border: 1px solid #e6e6e6;
+            margin: 20px 0;
+        }
+
+        .information #pre {
+            color: orangered;
+        }
+
+        /* Investment form styles */
+        .plan-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #232526, #414345);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #2c2d30;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: rgb(9, 10, 7);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #deec61ef;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #FFF;
+            font-size: 1.2em;
+        }
+
+        input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #333;
+            background-color: #FFF;
+        }
+
+        button {
+            background-color: #e95846;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.2em;
+        }
+
+        button:hover {
+            background-color: #cf4f3e;
+        }
+
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: none;
+            color: #FFF;
+        }
+
+        #confirmation {
+            color: green;
+            font-weight: bold;
+            display: none;
+            font-size: 1.2em;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #403e3d;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-right: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: #FFF;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #2db3cb;
+        }
+
+        .navbar .menu-toggle {
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #FFF;
+            display: none;
+        }
+
+        .navbar .menu-toggle.active {
+            color: #2db3cb;
+        }
+
+        /* Media query for smaller screens */
+        @media only screen and (max-width: 767px) {
+            .navbar .nav-links {
+                display: none;
+                flex-direction: column;
+                background:#403e3d;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar .menu-toggle.active + .nav-links {
+                display: flex;
+            }
+
+            .navbar .menu-toggle {
+                font-size: 1.8em;
+                cursor: pointer;
+                color: #FFF;
+                display: block;
+            }
+        }
+
+        /* Additional styling for the page */
+        .investment-section {
+            background-color: #6a0572;
+            color: #fff;
+            padding: 50px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .investment-section h1 {
+            color: #e95846;
+            background: #FFF;
+            padding: 15px;
+            font-size: 2.5em;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .investment-section h2,
+        .investment-section h3,
+        .investment-section p {
+            color: #FFF;
+            margin-bottom: 15px;
+        }
+
+        .investment-section hr {
+            border: 1px solid #e6e6e6;
+            margin: 20px 0;
+        }
+
+        .investment-section #pre {
+            color: orangered;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="container">
+            <img src="../pics/Logo.jpg" alt="Your Logo" class="logo">
+            <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="information">
+        <h2>Investment for Diamond Plan</h2>
+        <h1>1500Rs</h1>
+        <p>Please follow the instructions below to proceed with your investment.</p>
+        <h3>Choose one of these methods for investment and send me your investment on this information:</h3>
+        <h3>
+            Want to send me in JazzCash?
+            <hr>
+            My Number: 0326-1659029 <br>
+            Name: Ahmed Hasan
+        </h3>
+        <hr>
+        <h3>
+            Want to send me in EasyPaisa?
+            <hr>
+            My Number: 0340-7852588 <br>
+            Name: Mehboob ul Hasan.
+        </h3>
+        <p id="pre">
+            Send money and upload a screenshot of EasyPaisa or JazzCash and enter your name from where you have
+            sent me the investment.
+            Enter your number, then click on the "Get Started" button and wait for the time we give you.
+            In this time, we check your transaction ID and your screenshot. If you have uploaded wrong information
+            and an invalid screenshot, we may block your account and delete your login information.
+            You can then log in again and proceed with the original investment and correct information.
+        </p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <!-- Form -->
+        <form id="investmentForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="image">Upload Picture:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <label for="transId">Transaction ID:</label>
+            <input type="text" id="transId" name="transId" required>
+
+            <button type="button" onclick="startTimer()" id="depositButton" disabled>Get Started</button>
+        </form>
+
+        <!-- Timer display -->
+        <div id="timer"></div>
+
+        <!-- Confirmation message -->
+        <div id="confirmation">Deposit successful! Thank you.</div>
+    </div>
+
+    <!-- JavaScript Section -->
+    <script>
+        let timerCount = 54000; // 15 hours in seconds
+        let timerInterval;
+
+        function startTimer() {
+            document.getElementById("investmentForm").style.display = "none"; // Hide the form
+            document.getElementById("timer").style.display = "block"; // Display the timer
+            document.getElementById("confirmation").style.display = "none"; // Hide confirmation message
+
+            timerInterval = setInterval(updateTimer, 1000); // Update every second
+        }
+
+        function updateTimer() {
+            const hours = Math.floor(timerCount / 3600);
+            const minutes = Math.floor((timerCount % 3600) / 60);
+            const seconds = timerCount % 60;
+
+            document.getElementById("timer").textContent = `Time remaining: ${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+
+            if (timerCount === 0) {
+                clearInterval(timerInterval); // Stop the timer
+                alert('Time is up! Welcome.'); // You can replace this with your logic
+                // Example: Redirect to a different page
+                window.location.href = 'earning.html';
+            } else {
+                timerCount--;
+            }
+        }
+
+        // Enable "Deposit Now" button when a photo is provided
+        document.getElementById("image").addEventListener("change", function () {
+            const depositButton = document.getElementById("depositButton");
+            depositButton.disabled = false;
+        });
+
+        function toggleMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.classList.toggle('active');
+            navLinks.style.display = (menuToggle.classList.contains('active')) ? 'flex' : 'none';
+        }
+    </script>
+</body>
+
+</html>
+

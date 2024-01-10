@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn money by watching Videos</title>
+    <link rel="icon" type="image/jpg" href="../pics/Logo.jpg">
+    <style>
+     body {
+    font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
+    background: linear-gradient(to right, #3494E6, #EC6EAD);
+    color: #FFF;
+    font-size: 1.6em;
+    line-height: 1.5;
+    padding: 20px;
+    animation: gradientAnimation 10s infinite alternate;
+}
+
+@keyframes gradientAnimation {
+    from {
+        background-position: 0% 0%;
+    }
+
+    to {
+        background-position: 100% 0%;
+    }
+
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #343a40;
+    color: #fff;
+    width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav.header a.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+nav.header ul.navbar {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav.header ul.navbar li {
+    margin-right: 20px;
+}
+
+nav.header ul.navbar li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav.header ul.navbar li a:hover {
+    color: #007bff;
+}
+
+.counter {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    width: 100%;
+}
+
+button {
+    margin: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#countdown,
+#signupForm,
+#withdrawMessage {
+    text-align: center;
+    margin-top: 20px;
+    color: #555;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 200px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #007bff;
+}
+
+#withdrawBtn {
+    background-color: #dc3545;
+}
+
+#withdrawBtn:hover {
+    background-color: #c82333;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <nav class="header">
+        <div>
+            <a href="#" class="logo">
+                <img src="../pics/Logo.jpg" alt="Logo">
+            </a>
+        </div>
+        <div>
+            <ul class="navbar">
+                <li><a href="#" onclick="showAllButtons()">Home</a></li>
+                <li><a href="../withdraw.html" target="_blank">Withdraw</a></li>
+            </ul>
+        </div>
+        <div class="counter">Rs<span id="moneyCounter">4000</span></div>
+    </nav>
+
+    <div class="main" id="buttonContainer">
+        <!-- Button elements will be dynamically added here -->
+    </div>
+
+    <div id="countdown">Waiting for 0 seconds...</div>
+    <div id="withdrawMessage"></div>
+
+    <script>
+        // ... your existing script
+        document.addEventListener('DOMContentLoaded', function () {
+    let moneyCounter = 4000;
+    let username;
+
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+        username = storedUsername;
+        document.getElementById('signupForm').style.display = 'none';
+        const storedMoney = localStorage.getItem(`${username}_money`);
+        if (storedMoney) {
+            moneyCounter = parseFloat(storedMoney);
+            document.getElementById('moneyCounter').innerHTML = moneyCounter;
+        }
+    }
+
+    function signup(event) {
+        event.preventDefault();
+        username = document.getElementById('username').value;
+        localStorage.setItem('username', username);
+        document.getElementById('signupForm').style.display = 'none';
+    }
+
+    function createButton(link, index) {
+        const button = document.createElement('button');
+        button.textContent = `Click here to earn 110rs - Link ${index + 1}`;
+        button.onclick = function () {
+            startProcess(link, 20);
+            hideButton(button); // Call the function to hide the clicked button
+        };
+        document.getElementById('buttonContainer').appendChild(button);
+    }
+
+    function hideButton(button) {
+        button.style.display = 'none';
+    }
+
+    function showButton(button) {
+        button.style.display = 'block';
+    }
+
+    function setNextDay() {
+        const currentDate = new Date();
+        const lastClickedDate = localStorage.getItem('lastClickedDate');
+
+        if (!lastClickedDate || currentDate.getDate() !== parseInt(lastClickedDate)) {
+            // If no lastClickedDate or if it's a new day, show all buttons
+            showAllButtons();
+        } else {
+            // If lastClickedDate is the same day, hide all buttons
+            hideAllButtons();
+        }
+    }
+
+    function showAllButtons() {
+        const buttons = document.querySelectorAll('#buttonContainer button');
+        buttons.forEach(button => {
+            showButton(button);
+        });
+    }
+
+    function hideAllButtons() {
+        const buttons = document.querySelectorAll('#buttonContainer button');
+        buttons.forEach(button => {
+            hideButton(button);
+        });
+    }
+
+    function startProcess(link, seconds) {
+        const newWindow = window.open(link, '_blank', 'height=500,width=500');
+
+        window.setTimeout(function () {
+            if (!newWindow.closed) {
+                newWindow.close();
+            }
+        }, seconds * 1000);
+
+        countdown(seconds, newWindow);
+    }
+
+    function countdown(seconds, newWindow) {
+        let countdown = seconds;
+        let moneyAdded = false;
+
+        const countdownInterval = setInterval(function () {
+            document.getElementById('countdown').innerHTML = `Waiting for ${countdown} seconds...`;
+            countdown--;
+
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+
+                if (!moneyAdded) {
+                    moneyCounter += 110;
+                    document.getElementById('moneyCounter').innerHTML = moneyCounter;
+                    localStorage.setItem(`${username}_money`, moneyCounter.toString());
+                }
+
+                if (newWindow) {
+                    newWindow.close();
+                }
+            }
+        }, 1000);
+
+        const checkClosed = setInterval(function () {
+            if (newWindow.closed) {
+                clearInterval(countdownInterval);
+
+                if (!moneyAdded) {
+                    document.getElementById('withdrawMessage').innerHTML =
+                        'YOU HAVE CLOSED THE AD BEFORE THE TIMER ENDS';
+                    setTimeout(() => {
+                        document.getElementById('withdrawMessage').innerHTML = '';
+                    }, 10000);
+                }
+            }
+        }, 1000);
+    }
+
+    function withdraw() {
+        const minimumWithdrawal = 1000;
+        if (moneyCounter >= minimumWithdrawal) {
+            moneyCounter = 0;
+            localStorage.setItem(`${username}_money`, '0');
+            document.getElementById('moneyCounter').innerHTML = moneyCounter;
+            document.getElementById('withdrawMessage').innerHTML = '';
+        } else {
+            document.getElementById('withdrawMessage').innerHTML = 'Minimum withdrawal amount is 1000rs.';
+            setTimeout(() => {
+                document.getElementById('withdrawMessage').innerHTML = '';
+            }, 10000);
+        }
+    }
+
+    // Create buttons on page load
+    setNextDay();
+    for (let i = 1; i <= 50; i++) {
+        // Replace the link in the array with your actual links
+        const links = [
+            'https://www.tiktok.com/@fb_rebelgaming/video/7300478274994556166?is_from_webapp=1&sender_device=pc',
+            'https://www.youtube.com/watch?v=v9qD1IUVXDk',
+            // Add more links as needed
+        ];
+
+        createButton(links[i - 1], i);
+    }
+
+    document.getElementById('withdrawBtn').addEventListener('click', withdraw);
+    document.getElementById('signupForm').addEventListener('submit', signup);
+});
+
+    </script>
+</body>
+
+</html>
+
